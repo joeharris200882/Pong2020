@@ -38,9 +38,12 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+    //ball gets velocity
 
     ballx += ballVx;
     bally += ballVy;
+
+    //logic to move the paddles
 
     if (wnd.kbd.KeyIsPressed('S'))
     {
@@ -62,7 +65,7 @@ void Game::UpdateModel()
         p2y += 5;
     }
 
-    //Collision for paddle one
+    //Clamps for paddle one
     if (p1y < 0)
     {
         p1y = 1;
@@ -73,7 +76,7 @@ void Game::UpdateModel()
         p1y = (gfx.ScreenHeight - p1Height) - 1;
     }
 
-    //Collision for paddle 2
+    //Clamps for paddle 2
     if (p2y < 0)
     {
         p2y = 1;
@@ -125,10 +128,18 @@ void Game::ComposeFrame()
         gfx.PutPixel(gfx.ScreenWidth / 2, i, Colors::Blue);
     }
 
+    //goals
+    gfx.DrawRectDim(goal1x, goal1y, goal1Width, goal1Height, Colors::Red);
+    gfx.DrawRectDim(goal2x, goal2y, goal2Width, goal2Height, Colors::Red);
+
+
+   
+
+    //paddles
     gfx.DrawRectDim(p1x, p1y, p1Width, p1Height, Colors::White);
     gfx.DrawRectDim(p2x, p2y, p2Width, p2Height, Colors::White);
 
-
+    //ball
     gfx.DrawRectDim(ballx, bally, ballWidth, ballHeight, Colors::Green);
 
 }

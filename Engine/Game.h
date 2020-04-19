@@ -45,18 +45,29 @@ private:
 
     int p1x = 10;
     int p1y = gfx.ScreenHeight / 2;
-    int p1Width = 10;
-    int p1Height = 70;
+    const int p1Width = 10;
+    const int p1Height = 70;
 
     int p2x = gfx.ScreenWidth - 20;
     int p2y = gfx.ScreenHeight / 2;
-    int p2Width = 10;
-    int p2Height = 70;
+    const int p2Width = 10;
+    const int p2Height = 70;
+
+   const int goal1x = 1;
+   const int goal1y = gfx.ScreenHeight/3;
+   const int goal1Width = 5;
+   const int goal1Height = 150;
+
+    const int goal2x = gfx.ScreenWidth -20;
+    const int goal2y = gfx.ScreenHeight / 3;
+    const int goal2Width = 5;
+    const int goal2Height = 150;
+        
 
     int ballx = gfx.ScreenWidth/2;
     int bally = gfx.ScreenHeight/2;
-    int ballHeight = 5;
-    int ballWidth = 5;
+    const int ballHeight = 5;
+    const int ballWidth = 5;
     int ballVx = 4;
     int ballVy = 4;  
 
