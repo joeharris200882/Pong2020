@@ -90,31 +90,69 @@ void Game::UpdateModel()
 
     //Collision and rebound for ball
 
-    const int right = ballx + ballWidth;
+    const int ballright = ballx + ballWidth;
     if (ballx < 0)
     {
         ballx = 0;
         ballVx = -ballVx;
     }
-    else if ( right >= gfx.ScreenWidth)
+    else if ( ballright >= gfx.ScreenWidth)
     {
         ballx = (gfx.ScreenWidth - 1) - ballWidth;
         ballVx = -ballVx;
     }
 
-    const int bottom = bally + ballHeight;
+    const int ballbottom = bally + ballHeight;
     if (bally < 0)
     {
         bally = 0;
         ballVy = -ballVy;
     }
-    else if (bottom >= gfx.ScreenHeight)
+    else if (ballbottom >= gfx.ScreenHeight)
     {
         bally = (gfx.ScreenHeight - 1) - ballHeight;
         ballVy = -ballVy;
     }
 
+    //collision of ball with paddles
 
+    
+    
+    int ballrhs = ballx + ballWidth;
+    int ballBottom = bally + ballHeight;
+
+    if (ballrhs >= p2x)
+    {
+        ballVx = -ballVx;
+        
+    }
+    if (ballx <= p1x + p1Width)
+    {
+        ballVx = -ballVx;
+    }
+
+
+
+   
+   
+   
+
+
+
+    
+    
+   
+
+    
+
+
+   
+
+
+
+    
+
+   
 
   
 

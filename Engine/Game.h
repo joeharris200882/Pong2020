@@ -72,6 +72,7 @@ private:
     int ballVy = 4;  
 
     bool goalScored = false;
+    bool isColliding = false;
 
 
 	/********************************/
