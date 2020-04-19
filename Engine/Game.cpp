@@ -89,36 +89,35 @@ void Game::UpdateModel()
     }
 
     //Collision and rebound for ball
+
+    const int right = ballx + ballWidth;
     if (ballx < 0)
     {
-        goalScored = true;
+        ballx = 0;
+        ballVx = -ballVx;
     }
-
-    if (bally + ballHeight > gfx.ScreenHeight)
+    else if ( right >= gfx.ScreenWidth)
     {
-        bally = (gfx.ScreenHeight - ballHeight) - 1;
-        ballVy = -ballVy ;
+        ballx = (gfx.ScreenWidth - 1) - ballWidth;
+        ballVx = -ballVx;
     }
 
+    const int bottom = bally + ballHeight;
     if (bally < 0)
     {
         bally = 0;
         ballVy = -ballVy;
     }
-
-    if (ballx + ballWidth > gfx.ScreenWidth)
+    else if (bottom >= gfx.ScreenHeight)
     {
-        ballx = (gfx.ScreenWidth - ballWidth) - 1;
-        ballVx = -ballVx;
+        bally = (gfx.ScreenHeight - 1) - ballHeight;
+        ballVy = -ballVy;
     }
 
 
 
-
-        
   
-   
-   
+
 }
 
 void Game::ComposeFrame()
