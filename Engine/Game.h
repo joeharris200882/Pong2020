@@ -58,7 +58,7 @@ private:
     int ballHeight = 5;
     int ballWidth = 5;
     int ballVx = 4;
-    int ballVy = 4;
+    int ballVy = 4;  
 
 
 	/********************************/
