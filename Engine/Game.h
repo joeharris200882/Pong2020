@@ -60,6 +60,8 @@ private:
     int ballVx = 4;
     int ballVy = 4;  
 
+    bool goalScored = false;
+
 
 	/********************************/
 };

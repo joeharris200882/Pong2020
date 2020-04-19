@@ -62,6 +62,7 @@ void Game::UpdateModel()
         p2y += 5;
     }
 
+    //Collision for paddle one
     if (p1y < 0)
     {
         p1y = 1;
@@ -72,6 +73,7 @@ void Game::UpdateModel()
         p1y = (gfx.ScreenHeight - p1Height) - 1;
     }
 
+    //Collision for paddle 2
     if (p2y < 0)
     {
         p2y = 1;
@@ -83,10 +85,10 @@ void Game::UpdateModel()
    
     }
 
+    //Collision and rebound for ball
     if (ballx < 0)
     {
-        ballx = 0;
-        ballVx = - ballVx;
+        goalScored = true;
     }
 
     if (bally + ballHeight > gfx.ScreenHeight)
@@ -106,6 +108,7 @@ void Game::UpdateModel()
         ballx = (gfx.ScreenWidth - ballWidth) - 1;
         ballVx = -ballVx;
     }
+
 
 
 
