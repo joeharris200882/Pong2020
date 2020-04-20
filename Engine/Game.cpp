@@ -36,6 +36,27 @@ void Game::Go()
 	gfx.EndFrame();
 }
 
+/*
+bool TestCollision(int Ob1R, int Ob1L, int Ob1T, int Ob1B, int Ob2R, int Ob2L, int Ob2T, int Ob2B  )
+{
+  
+    if (Ob1L < Ob2R &&
+        Ob1R > Ob2L &&
+        Ob1T < Ob2B &&
+        Ob1B > Ob2T)
+
+    {
+        return true;
+
+    }
+    else
+    {
+       return false;
+    }
+    }
+    */
+
+
 void Game::UpdateModel()
 {
     //ball gets velocity
@@ -56,93 +77,110 @@ void Game::UpdateModel()
         p1y -= 5;
     }
 
-    if (wnd.kbd.KeyIsPressed(VK_UP))
-    {
-        p2y -= 5;
-    }
+if (wnd.kbd.KeyIsPressed(VK_UP))
+{
+    p2y -= 5;
+}
 
-    if (wnd.kbd.KeyIsPressed(VK_DOWN))
-    {
-        p2y += 5;
-    }
+if (wnd.kbd.KeyIsPressed(VK_DOWN))
+{
+    p2y += 5;
+}
 
-    //Clamps for paddle one
-    if (p1y < 0)
-    {
-        p1y = 1;
-    }
-   
-    if (p1y + p1Height > gfx.ScreenHeight)
-    {
-        p1y = (gfx.ScreenHeight - p1Height) - 1;
-    }
+//Clamps for paddle one
+if (p1y < 0)
+{
+    p1y = 1;
+}
 
-    //Clamps for paddle 2
-    if (p2y < 0)
-    {
-        p2y = 1;
-    }
+if (p1y + p1Height > gfx.ScreenHeight)
+{
+    p1y = (gfx.ScreenHeight - p1Height) - 1;
+}
+
+//Clamps for paddle 2
+if (p2y < 0)
+{
+    p2y = 1;
+}
+
+if (p2y + p2Height > gfx.ScreenHeight)
+{
+    p2y = (gfx.ScreenHeight - p2Height) - 1;
+
+}
+
+//Collision and rebound for ball
+
+const int ballright = ballx + ballWidth;
+if (ballx < 0)
+{
+    ballx = 0;
+    ballVx = -ballVx;
+}
+else if (ballright >= gfx.ScreenWidth)
+{
+    ballx = (gfx.ScreenWidth - 1) - ballWidth;
+    ballVx = -ballVx;
+}
+
+const int ballbottom = bally + ballHeight;
+if (bally < 0)
+{
+    bally = 0;
+    ballVy = -ballVy;
+}
+else if (ballbottom >= gfx.ScreenHeight)
+{
+    bally = (gfx.ScreenHeight - 1) - ballHeight;
+    ballVy = -ballVy;
+}
+
+
+//collision of ball with paddles
+
+
+
+const int ballBottom = bally + ballHeight;
+const int p1right = p1x + p1Width;
+const int p1Bottom = p1y + p1Height;
+const int p2right = p2x + p2Width;
+const int p2Bottom = p2y + p2Height;
+
+if (ballx < p1right &&
+    ballright > p1x&&
+    bally < p1Bottom &&
+    ballBottom > p1y
+
+    ||
+
+    ballright > p2x &&
+    ballx < p2right &&
+    bally < p2Bottom &&
+    ballBottom > p2y
+
+
+
+    )
+
+{
+    collision = true;
+    ballVx = -ballVx;
     
-    if (p2y + p2Height > gfx.ScreenHeight)
-    {
-        p2y = (gfx.ScreenHeight - p2Height) - 1;
-   
-    }
 
-    //Collision and rebound for ball
+}
 
-    const int ballright = ballx + ballWidth;
-    if (ballx < 0)
-    {
-        ballx = 0;
-        ballVx = -ballVx;
-    }
-    else if ( ballright >= gfx.ScreenWidth)
-    {
-        ballx = (gfx.ScreenWidth - 1) - ballWidth;
-        ballVx = -ballVx;
-    }
 
-    const int ballbottom = bally + ballHeight;
-    if (bally < 0)
-    {
-        bally = 0;
-        ballVy = -ballVy;
-    }
-    else if (ballbottom >= gfx.ScreenHeight)
-    {
-        bally = (gfx.ScreenHeight - 1) - ballHeight;
-        ballVy = -ballVy;
-    }
+else
+{
+    collision = false;
+}
+
+
+
 
    
-    //collision of ball with paddles
-
-    
-   
-    const int ballBottom = bally + ballHeight;
-    const int p1right = p1x + p1Width;
-    const int p1Bottom = p1y + p1Height;
-    const int p2right = p1x + p1Width;
-    const int p2Bottom = p2y + p2Height;
-
-    if (ballx < p1right && 
-        ballright > p1x &&
-        bally < p1Bottom &&
-        ballBottom > p1y )
-
-    {
-        collision = true;  
-        ballVx = -ballVx;
-
-    }
-    else
-    {
-        collision = false;
-    }
-
-   
-  
+    //Is a goal scored?
 
     if (ballright == goal2x)
     {
@@ -156,9 +194,15 @@ void Game::UpdateModel()
     }
 
    
+    
 
+   //score meter 
 
-   
+    if (goalScored = true)
+    {
+        scoreWidth = scoreWidth + 5;
+        goalScored = false;
+    }
    
    
 
