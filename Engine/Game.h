@@ -45,25 +45,15 @@ private:
 
     //Paddles
     int p1x = 20;
-    int p1y = gfx.ScreenHeight / 2;
-    const int p1Width = 10;
-    const int p1Height = 70;
+    int p1y = 1;
+    const int p1Width = 5;
+    const int p1Height = 100;
 
-    int p2x = gfx.ScreenWidth - 40;
-    int p2y = gfx.ScreenHeight / 2;
-    const int p2Width = 10;
-    const int p2Height = 70;
+    int p2x = 500;
+    int p2y =  10;
+    const int p2Width = 5;
+    const int p2Height = 100;
 
-    //Goals
-   const int goal1x = 1;
-   const int goal1y = gfx.ScreenHeight/3;
-   const int goal1Width = 5;
-   const int goal1Height = 150;
-
-    const int goal2x = gfx.ScreenWidth -7;
-    const int goal2y = gfx.ScreenHeight / 3;
-    const int goal2Width = 5;
-    const int goal2Height = 150;
         
     //Ball
     int ballx = gfx.ScreenWidth/2;
@@ -78,7 +68,8 @@ private:
     int scorey = 10;
     int scoreWidth = 5;
     int scoreHeight = 10;
-    int scoreTrack = 0;
+    int scoreTrack = 1;
+    int scoreMax  = 50;
 
     bool goalScored = false;
     bool collision = false;

@@ -61,11 +61,14 @@ void Game::UpdateModel()
 {
     //ball gets velocity
 
+  
     ballx += ballVx;
     bally += ballVy;
-    scoreWidth = scoreWidth+scoreTrack;
+    
 
     //logic to move the paddles
+
+    //Player One Logic
 
     if (wnd.kbd.KeyIsPressed('S'))
     {
@@ -77,159 +80,189 @@ void Game::UpdateModel()
         p1y -= 5;
     }
 
-if (wnd.kbd.KeyIsPressed(VK_UP))
-{
-    p2y -= 5;
-}
-
-if (wnd.kbd.KeyIsPressed(VK_DOWN))
-{
-    p2y += 5;
-}
-
-//Clamps for paddle one
-if (p1y < 0)
-{
-    p1y = 1;
-}
-
-if (p1y + p1Height > gfx.ScreenHeight)
-{
-    p1y = (gfx.ScreenHeight - p1Height) - 1;
-}
-
-//Clamps for paddle 2
-if (p2y < 0)
-{
-    p2y = 1;
-}
-
-if (p2y + p2Height > gfx.ScreenHeight)
-{
-    p2y = (gfx.ScreenHeight - p2Height) - 1;
-
-}
-
-//Collision and rebound for ball
-
-const int ballright = ballx + ballWidth;
-if (ballx < 0)
-{
-    ballx = 0;
-    ballVx = -ballVx;
-}
-else if (ballright >= gfx.ScreenWidth)
-{
-    ballx = (gfx.ScreenWidth - 1) - ballWidth;
-    ballVx = -ballVx;
-}
-
-const int ballbottom = bally + ballHeight;
-if (bally < 0)
-{
-    bally = 0;
-    ballVy = -ballVy;
-}
-else if (ballbottom >= gfx.ScreenHeight)
-{
-    bally = (gfx.ScreenHeight - 1) - ballHeight;
-    ballVy = -ballVy;
-}
-
-
-//collision of ball with paddles
-
-
-
-const int ballBottom = bally + ballHeight;
-const int p1right = p1x + p1Width;
-const int p1Bottom = p1y + p1Height;
-const int p2right = p2x + p2Width;
-const int p2Bottom = p2y + p2Height;
-
-if (ballx < p1right &&
-    ballright > p1x&&
-    bally < p1Bottom &&
-    ballBottom > p1y
-
-    ||
-
-    ballright > p2x &&
-    ballx < p2right &&
-    bally < p2Bottom &&
-    ballBottom > p2y
-
-
-
-    )
-
-{
-    collision = true;
-    ballVx = -ballVx;
-    
-
-}
-
-
-else
-{
-    collision = false;
-}
-
-
-
-
-   
-    //Is a goal scored?
-
-    if (ballright == goal2x)
+    if (wnd.kbd.KeyIsPressed('A'))
     {
-        goalScored = true;
+        p1x -= 5;
     }
 
-    if (ballx == goal1x + goal1Width)
+    if (wnd.kbd.KeyIsPressed('D'))
     {
-        goalScored = true;
-        scoreTrack + 5;
+        p1x += 5;
+    }
+
+    //Player Two Logic
+
+        if (wnd.kbd.KeyIsPressed(VK_UP))
+    {
+        p2y -= 5;
+    }
+
+    if (wnd.kbd.KeyIsPressed(VK_DOWN))
+    {
+        p2y += 5;
+    }
+
+    if (wnd.kbd.KeyIsPressed(VK_LEFT))
+    {
+        p2x -= 5;
+    }
+    if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+    {
+        p2x += 5;
     }
 
    
-    
 
-   //score meter 
 
-    if (goalScored = true)
+   
+
+
+
+
+    //Clamps For Paddle One
+    if (p1y < 0)
     {
-        scoreWidth = scoreWidth + 5;
-        goalScored = false;
+        p1y = 1;
     }
+
+    if (p1y + p1Height > gfx.ScreenHeight)
+    {
+        p1y = (gfx.ScreenHeight - p1Height) - 1;
+    }
+
+    if (p1x + p1Width > gfx.ScreenWidth)
+    {
+        p1x = (gfx.ScreenWidth - p1Width) - 1;
+
+    }
+
+    if (p1x < 0)
+    {
+        p1x = 1;
+    }
+
+    if (p1x + p1Width > gfx.ScreenWidth / 2)
+    {
+        p1x = (((gfx.ScreenWidth / 2) - p1Width) - 1);
+    }
+
+
    
-   
+
+    //Clamps For Paddle 2
+    if (p2y < 0)
+    {
+        p2y = 1;
+    }
+
+    if (p2y + p2Height > gfx.ScreenHeight)
+    {
+        p2y = (gfx.ScreenHeight - p2Height) - 1;
+
+    }
+
+
+    // additional tennis clamps
+
+
+    if (p2x + p1Width > gfx.ScreenWidth)
+    {
+        p2x = (gfx.ScreenWidth - p2Width) - 1;
+
+    }
+
+    if (p2x < 0)
+    {
+        p2x = 1;
+    }
+
+    if (p2x  <= gfx.ScreenWidth / 2)
+    {
+        p2x = (gfx.ScreenWidth/2) +1;
+    }
+
+
+    //Collision and rebound for ball
+
+    const int ballright = ballx + ballWidth;
+    if (ballx < 0)
+    {
+        ballx = 0;
+        ballVx = -ballVx;
+    }
+    else if (ballright >= gfx.ScreenWidth)
+    {
+        ballx = (gfx.ScreenWidth - 1) - ballWidth;
+        ballVx = -ballVx;
+    }
+
+    const int ballbottom = bally + ballHeight;
+    if (bally < 0)
+    {
+        bally = 0;
+        ballVy = -ballVy;
+    }
+    else if (ballbottom >= gfx.ScreenHeight)
+    {
+        bally = (gfx.ScreenHeight - 1) - ballHeight;
+        ballVy = -ballVy;
+    }
+
+
+    //collision of ball with paddles
 
 
 
+    const int ballBottom = bally + ballHeight;
+    const int p1right = p1x + p1Width;
+    const int p1Bottom = p1y + p1Height;
+    const int p2right = p2x + p2Width;
+    const int p2Bottom = p2y + p2Height;
+
+    if (ballx < p1right &&
+        ballright > p1x&&
+        bally < p1Bottom &&
+        ballBottom > p1y
+
+        ||
+
+        ballright > p2x &&
+        ballx < p2right &&
+        bally < p2Bottom &&
+        ballBottom > p2y
+
+
+
+        )
+
+    {
+        collision = true;
+        ballVx = -ballVx;
     
-    
+
+    }
+
+
+    else
+    {
+        collision = false;
+    }
+
+
+
+    //need to redo code for scoring of goal, should I just make the whole back wall the goal? or is that just lazy
    
 
-    
-
 
    
-
-
-
     
-
-   
-
-  
-
+    goalScored = false;
 }
 
 void Game::ComposeFrame()
 {
     //score meter
+
 
 
     for (int i = scorex; i < scoreWidth; i++)
@@ -242,9 +275,7 @@ void Game::ComposeFrame()
         gfx.PutPixel(gfx.ScreenWidth / 2, i, Colors::Blue);
     }
 
-    //goals
-    gfx.DrawRectDim(goal1x, goal1y, goal1Width, goal1Height, Colors::Red);
-    gfx.DrawRectDim(goal2x, goal2y, goal2Width, goal2Height, Colors::Red);
+   
 
 
    
@@ -254,14 +285,22 @@ void Game::ComposeFrame()
     gfx.DrawRectDim(p2x, p2y, p2Width, p2Height, Colors::White);
 
    
-    if (collision == true)
+    
+    
+    gfx.DrawRectDim(ballx, bally, ballWidth, ballHeight, Colors::Red);
+
+    if (goalScored == true)
     {
-        gfx.DrawRectDim(ballx, bally, ballWidth, ballHeight, Colors::Red);
+        for (int i = 150; i < 200; i++)
+        {
+            for (int j = 150; j < 200; j++)
+            {
+                gfx.DrawRectDim(j, i, 50, 50, Colors::Cyan);
+            }
+        }
     }
-    else {
-        //ball
-        gfx.DrawRectDim(ballx, bally, ballWidth, ballHeight, Colors::Green);
+    else
+    {
+
     }
-
-
 }
