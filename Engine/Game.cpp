@@ -42,6 +42,7 @@ void Game::UpdateModel()
 
     ballx += ballVx;
     bally += ballVy;
+    scoreWidth = scoreWidth+scoreTrack;
 
     //logic to move the paddles
 
@@ -114,23 +115,47 @@ void Game::UpdateModel()
         ballVy = -ballVy;
     }
 
+   
     //collision of ball with paddles
 
     
-    
-    int ballrhs = ballx + ballWidth;
-    int ballBottom = bally + ballHeight;
+   
+    const int ballBottom = bally + ballHeight;
+    const int p1right = p1x + p1Width;
+    const int p1Bottom = p1y + p1Height;
+    const int p2right = p1x + p1Width;
+    const int p2Bottom = p2y + p2Height;
 
-    if (ballrhs >= p2x)
+    if (ballx < p1right && 
+        ballright > p1x &&
+        bally < p1Bottom &&
+        ballBottom > p1y )
+
     {
+        collision = true;  
         ballVx = -ballVx;
-        
+
     }
-    if (ballx <= p1x + p1Width)
+    else
     {
-        ballVx = -ballVx;
+        collision = false;
     }
 
+   
+  
+
+    if (ballright == goal2x)
+    {
+        goalScored = true;
+    }
+
+    if (ballx == goal1x + goal1Width)
+    {
+        goalScored = true;
+        scoreTrack + 5;
+    }
+
+   
 
 
    
@@ -160,6 +185,14 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+    //score meter
+
+
+    for (int i = scorex; i < scoreWidth; i++)
+    {
+        gfx.DrawRectDim(i, scorey, scoreWidth, scoreHeight,Colors::Cyan);
+    }
+
     for (int i = 0; i < gfx.ScreenHeight; i++)
     {
         gfx.PutPixel(gfx.ScreenWidth / 2, i, Colors::Blue);
@@ -176,7 +209,15 @@ void Game::ComposeFrame()
     gfx.DrawRectDim(p1x, p1y, p1Width, p1Height, Colors::White);
     gfx.DrawRectDim(p2x, p2y, p2Width, p2Height, Colors::White);
 
-    //ball
-    gfx.DrawRectDim(ballx, bally, ballWidth, ballHeight, Colors::Green);
+   
+    if (collision == true)
+    {
+        gfx.DrawRectDim(ballx, bally, ballWidth, ballHeight, Colors::Red);
+    }
+    else {
+        //ball
+        gfx.DrawRectDim(ballx, bally, ballWidth, ballHeight, Colors::Green);
+    }
+
 
 }
