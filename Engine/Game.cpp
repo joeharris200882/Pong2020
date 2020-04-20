@@ -36,239 +36,229 @@ void Game::Go()
 	gfx.EndFrame();
 }
 
-/*
-bool TestCollision(int Ob1R, int Ob1L, int Ob1T, int Ob1B, int Ob2R, int Ob2L, int Ob2T, int Ob2B  )
-{
-  
-    if (Ob1L < Ob2R &&
-        Ob1R > Ob2L &&
-        Ob1T < Ob2B &&
-        Ob1B > Ob2T)
-
-    {
-        return true;
-
-    }
-    else
-    {
-       return false;
-    }
-    }
-    */
-
-
 void Game::UpdateModel()
 {
-    //ball gets velocity
-
   
-    ballx += ballVx;
-    bally += ballVy;
+    if (goalScored == false)
+    {
+        
     
+        
 
-    //logic to move the paddles
+        //ball gets velocity
 
-    //Player One Logic
 
-    if (wnd.kbd.KeyIsPressed('S'))
-    {
-        p1y += 5;
-    }
+        ballx += ballVx;
+        bally += ballVy;
 
-    if (wnd.kbd.KeyIsPressed('W'))
-    {
-        p1y -= 5;
-    }
 
-    if (wnd.kbd.KeyIsPressed('A'))
-    {
-        p1x -= 5;
-    }
+        //logic to move the paddles
 
-    if (wnd.kbd.KeyIsPressed('D'))
-    {
-        p1x += 5;
-    }
+        //Player One Logic
 
-    //Player Two Logic
+        if (wnd.kbd.KeyIsPressed('S'))
+        {
+            p1y += 5;
+        }
+
+        if (wnd.kbd.KeyIsPressed('W'))
+        {
+            p1y -= 5;
+        }
+
+        // if (wnd.kbd.KeyIsPressed('A'))
+        // {
+        //     p1x -= 5;
+        // }
+        //
+        // if (wnd.kbd.KeyIsPressed('D'))
+        // {
+        //     p1x += 5;
+        // }
+
+         //Player Two Logic
 
         if (wnd.kbd.KeyIsPressed(VK_UP))
-    {
-        p2y -= 5;
+        {
+            p2y -= 5;
+        }
+
+        if (wnd.kbd.KeyIsPressed(VK_DOWN))
+        {
+            p2y += 5;
+        }
+
+        // if (wnd.kbd.KeyIsPressed(VK_LEFT))
+        // {
+        //     p2x -= 5;
+        // }
+        // if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+        // {
+        //     p2x += 5;
+        // }
+
+
+
+
+         //Clamps For Paddle One
+        if (p1y < 0)
+        {
+            p1y = 1;
+        }
+
+        if (p1y + p1Height > gfx.ScreenHeight)
+        {
+            p1y = (gfx.ScreenHeight - p1Height) - 1;
+        }
+
+        // if (p1x + p1Width > gfx.ScreenWidth)
+        // {
+        //     p1x = (gfx.ScreenWidth - p1Width) - 1;
+        //
+        // }
+        //
+        // if (p1x < 0)
+        // {
+        //     p1x = 1;
+        // }
+        //
+        // if (p1x + p1Width > gfx.ScreenWidth / 2)
+        // {
+        //     p1x = (((gfx.ScreenWidth / 2) - p1Width) - 1);
+        // }
+
+
+
+
+         //Clamps For Paddle 2
+        if (p2y < 0)
+        {
+            p2y = 1;
+        }
+
+        if (p2y + p2Height > gfx.ScreenHeight)
+        {
+            p2y = (gfx.ScreenHeight - p2Height) - 1;
+
+        }
+
+
+        //if (p2x + p1Width > gfx.ScreenWidth)
+        //{
+        //    p2x = (gfx.ScreenWidth - p2Width) - 1;
+        //
+        //}
+        //
+        //if (p2x < 0)
+        //{
+        //    p2x = 1;
+        //}
+        //
+        //if (p2x  <= gfx.ScreenWidth / 2)
+        //{
+        //    p2x = (gfx.ScreenWidth/2) +1;
+        //}
+
+
+
+        //Collision and rebound for ball
+
+        const int ballright = ballx + ballWidth;
+        if (ballx < 0)
+        {
+            ballx = 0;
+            ballVx = -ballVx;
+        }
+        else if (ballright >= gfx.ScreenWidth)
+        {
+            ballx = (gfx.ScreenWidth - 1) - ballWidth;
+            ballVx = -ballVx;
+        }
+
+        const int ballbottom = bally + ballHeight;
+        if (bally < 0)
+        {
+            bally = 0;
+            ballVy = -ballVy;
+        }
+        else if (ballbottom >= gfx.ScreenHeight)
+        {
+            bally = (gfx.ScreenHeight - 1) - ballHeight;
+            ballVy = -ballVy;
+        }
+
+
+        //collision of ball with paddles
+
+
+
+        const int ballBottom = bally + ballHeight;
+        const int p1right = p1x + p1Width;
+        const int p1Bottom = p1y + p1Height;
+        const int p2right = p2x + p2Width;
+        const int p2Bottom = p2y + p2Height;
+
+        if (ballx < p1right &&
+            ballright > p1x&&
+            bally < p1Bottom &&
+            ballBottom > p1y
+
+            ||
+
+            ballright > p2x&&
+            ballx < p2right &&
+            bally < p2Bottom &&
+            ballBottom > p2y
+
+
+
+            )
+
+        {
+
+            collision = true;
+            ballVx = -ballVx;
+
+
+
+        }
+
+
+        else
+        {
+            collision = false;
+        }
+
+
+
+
+
     }
 
-    if (wnd.kbd.KeyIsPressed(VK_DOWN))
+    if (ballx <= 1)
     {
-        p2y += 5;
-    }
+        goalScored = true;
+        score.scoreTrack = score.scoreTrack + 5;
+        score.scoreWidth = score.scoreWidth +score.scoreTrack;
+        ballVx == -ballVx;
+      
 
-    if (wnd.kbd.KeyIsPressed(VK_LEFT))
-    {
-        p2x -= 5;
-    }
-    if (wnd.kbd.KeyIsPressed(VK_RIGHT))
-    {
-        p2x += 5;
-    }
+        goalScored = false;
 
+
+      
+       
+    }
    
-
-
    
-
-
-
-
-    //Clamps For Paddle One
-    if (p1y < 0)
-    {
-        p1y = 1;
-    }
-
-    if (p1y + p1Height > gfx.ScreenHeight)
-    {
-        p1y = (gfx.ScreenHeight - p1Height) - 1;
-    }
-
-    if (p1x + p1Width > gfx.ScreenWidth)
-    {
-        p1x = (gfx.ScreenWidth - p1Width) - 1;
-
-    }
-
-    if (p1x < 0)
-    {
-        p1x = 1;
-    }
-
-    if (p1x + p1Width > gfx.ScreenWidth / 2)
-    {
-        p1x = (((gfx.ScreenWidth / 2) - p1Width) - 1);
-    }
-
-
-   
-
-    //Clamps For Paddle 2
-    if (p2y < 0)
-    {
-        p2y = 1;
-    }
-
-    if (p2y + p2Height > gfx.ScreenHeight)
-    {
-        p2y = (gfx.ScreenHeight - p2Height) - 1;
-
-    }
-
-
-    // additional tennis clamps
-
-
-    if (p2x + p1Width > gfx.ScreenWidth)
-    {
-        p2x = (gfx.ScreenWidth - p2Width) - 1;
-
-    }
-
-    if (p2x < 0)
-    {
-        p2x = 1;
-    }
-
-    if (p2x  <= gfx.ScreenWidth / 2)
-    {
-        p2x = (gfx.ScreenWidth/2) +1;
-    }
-
-
-    //Collision and rebound for ball
-
-    const int ballright = ballx + ballWidth;
-    if (ballx < 0)
-    {
-        ballx = 0;
-        ballVx = -ballVx;
-    }
-    else if (ballright >= gfx.ScreenWidth)
-    {
-        ballx = (gfx.ScreenWidth - 1) - ballWidth;
-        ballVx = -ballVx;
-    }
-
-    const int ballbottom = bally + ballHeight;
-    if (bally < 0)
-    {
-        bally = 0;
-        ballVy = -ballVy;
-    }
-    else if (ballbottom >= gfx.ScreenHeight)
-    {
-        bally = (gfx.ScreenHeight - 1) - ballHeight;
-        ballVy = -ballVy;
-    }
-
-
-    //collision of ball with paddles
-
-
-
-    const int ballBottom = bally + ballHeight;
-    const int p1right = p1x + p1Width;
-    const int p1Bottom = p1y + p1Height;
-    const int p2right = p2x + p2Width;
-    const int p2Bottom = p2y + p2Height;
-
-    if (ballx < p1right &&
-        ballright > p1x&&
-        bally < p1Bottom &&
-        ballBottom > p1y
-
-        ||
-
-        ballright > p2x &&
-        ballx < p2right &&
-        bally < p2Bottom &&
-        ballBottom > p2y
-
-
-
-        )
-
-    {
-        collision = true;
-        ballVx = -ballVx;
-    
-
-    }
-
-
-    else
-    {
-        collision = false;
-    }
-
-
-
-    //need to redo code for scoring of goal, should I just make the whole back wall the goal? or is that just lazy
-   
-
-
-   
-    
-    goalScored = false;
 }
 
 void Game::ComposeFrame()
 {
+   
+
     //score meter
-
-
-
-    for (int i = scorex; i < scoreWidth; i++)
-    {
-        gfx.DrawRectDim(i, scorey, scoreWidth, scoreHeight,Colors::Cyan);
-    }
+    score.Draw(gfx);
 
     for (int i = 0; i < gfx.ScreenHeight; i++)
     {
@@ -289,18 +279,5 @@ void Game::ComposeFrame()
     
     gfx.DrawRectDim(ballx, bally, ballWidth, ballHeight, Colors::Red);
 
-    if (goalScored == true)
-    {
-        for (int i = 150; i < 200; i++)
-        {
-            for (int j = 150; j < 200; j++)
-            {
-                gfx.DrawRectDim(j, i, 50, 50, Colors::Cyan);
-            }
-        }
-    }
-    else
-    {
-
-    }
+  
 }

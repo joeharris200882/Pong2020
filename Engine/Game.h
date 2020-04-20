@@ -23,6 +23,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+#include "Score.h"
 
 class Game
 {
@@ -49,7 +50,7 @@ private:
     const int p1Width = 5;
     const int p1Height = 100;
 
-    int p2x = 500;
+    int p2x = gfx.ScreenWidth-30;
     int p2y =  10;
     const int p2Width = 5;
     const int p2Height = 100;
@@ -60,16 +61,10 @@ private:
     int bally = gfx.ScreenHeight/2;
     const int ballHeight = 5;
     const int ballWidth = 5;
-    int ballVx = 4;
-    int ballVy = 4;  
+    int ballVx = 5;
+    int ballVy = 5;  
 
-    //score meter
-    int scorex = 10;
-    int scorey = 10;
-    int scoreWidth = 5;
-    int scoreHeight = 10;
-    int scoreTrack = 1;
-    int scoreMax  = 50;
+    Score score;
 
     bool goalScored = false;
     bool collision = false;
