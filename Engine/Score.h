@@ -5,12 +5,22 @@ class Score
 {
 public:
 
-    void Draw(Graphics& gfx);
+    void DrawP1(Graphics& gfx);
+    void DrawP2(Graphics& gfx);
 
-    int scorex = 10;
-    int scorey = 10;
-    int scoreWidth = 20;
-    int scoreHeight = 15;
-    int scoreTrack = 1;
-    int scoreMax = 50;
+
+    int scoreP1BarBegin = 10;
+    int scoreP1Bary = 10;
+    int scoreP1BarEnd = 5;
+    int scoreP1BarHeight = scoreP1Bary+10;
+    int scoreP1Max = 50;
+    int scoreP1Track = 1;
+    
+
+    int scoreP2BarBegin = 550;
+    int scoreP2Bary = 10;
+    int scoreP2BarEnd = 5;
+    int scoreP2BarHeight = scoreP2Bary + 10;
+    int scoreP2Max = 50;
+    int scoreP2Track = 1;
 };

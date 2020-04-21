@@ -24,6 +24,7 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "Score.h"
+#include "Sprites.h"
 
 class Game
 {
@@ -46,12 +47,12 @@ private:
 
     //Paddles
     int p1x = 20;
-    int p1y = 1;
+    int p1y = gfx.ScreenHeight / 4;
     const int p1Width = 5;
     const int p1Height = 100;
 
     int p2x = gfx.ScreenWidth-30;
-    int p2y =  10;
+    int p2y =  gfx.ScreenWidth / 4;
     const int p2Width = 5;
     const int p2Height = 100;
 
@@ -64,10 +65,19 @@ private:
     int ballVx = 5;
     int ballVy = 5;  
 
-    Score score;
+    Score scoreP1;
+    Score scoreP2;
 
     bool goalScored = false;
     bool collision = false;
+    bool gameOver = false;
+    bool ScoreMax = 50;
+    bool reward = 5;
+
+    int goalScoredP1= gfx.ScreenWidth - 2;
+    int goalScoredP2 = 1;
+
+    Sprites GameOver;
 
 
 	/********************************/
