@@ -25,6 +25,7 @@
 #include "Graphics.h"
 #include "Score.h"
 #include "Sprites.h"
+#include "Ball.h"
 
 class Game
 {
@@ -58,12 +59,13 @@ private:
 
         
     //Ball
-    int ballx = gfx.ScreenWidth/2;
-    int bally = gfx.ScreenHeight/2;
-    const int ballHeight = 5;
-    const int ballWidth = 5;
-    int ballVx = 5;
-    int ballVy = 5;  
+    //int ballx = gfx.ScreenWidth/2;
+    //int bally = gfx.ScreenHeight/2;
+    //const int ballHeight = 5;
+    //const int ballWidth = 5;
+    //int ballVx = 5;
+    //int ballVy = 5;  
+    Ball ball;
 
     Score scoreP1;
     Score scoreP2;
@@ -72,7 +74,7 @@ private:
     bool collision = false;
     bool gameOver = false;
     bool ScoreMax = 50;
-    bool reward = 5;
+    const int  reward = 5;
 
     int goalScoredP1= gfx.ScreenWidth - 2;
     int goalScoredP2 = 1;

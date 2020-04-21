@@ -39,8 +39,7 @@ void Game::Go()
 }
 
 void Game::UpdateModel()
-{
-    
+{  
     if (gameOver == false)
     {
 
@@ -51,8 +50,8 @@ void Game::UpdateModel()
             //ball gets velocity
 
 
-            ballx += ballVx;
-            bally += ballVy;
+            ball.x += ball.vx;
+            ball.y += ball.vy;
 
           
 
@@ -126,63 +125,64 @@ void Game::UpdateModel()
 
             //Collision and rebound for ball
 
-                             const int ballright = ballx + ballWidth;
-                             if (ballx < 0)
+                             const int ballright = ball.x + ball.width;
+                             if (ball.x < 0)
                              {
-                                 ballx = 0;
-                                 ballVx = -ballVx;
+                                 ball.x = 0;
+                                 ball.vx = -ball.vx;
                              }
                              else if (ballright >= gfx.ScreenWidth)
                              {
-                                 ballx = (gfx.ScreenWidth - 1) - ballWidth;
-                                 ballVx = -ballVx;
+                                 ball.x = (gfx.ScreenWidth - 1) - ball.width;
+                                 ball.vx = -ball.vx;
                              }
 
-                             const int ballbottom = bally + ballHeight;
-                             if (bally < 0)
+                             const int ballbottom = ball.y + ball.height;
+                             if (ball.y < 0)
                              {
-                                 bally = 0;
-                                 ballVy = -ballVy;
+                                 ball.y = 0;
+                                 ball.vy = -ball.vy;
                              }
                              else if (ballbottom >= gfx.ScreenHeight)
                              {
-                                 bally = (gfx.ScreenHeight - 1) - ballHeight;
-                                 ballVy = -ballVy;
+                                 ball.y = (gfx.ScreenHeight - 1) - ball.height;
+                                 ball.vy = -ball.vy;
                              }
 
 
             //collision of ball with paddles
 
-            const int ballBottom = bally + ballHeight;
+            const int ballBottom = ball.y + ball.height;
             const int p1right = p1x + p1Width;
             const int p1Bottom = p1y + p1Height;
             const int p2right = p2x + p2Width;
             const int p2Bottom = p2y + p2Height;
 
-            if (ballx < p1right &&
+            if (ball.x < p1right &&
                 ballright > p1x&&
-                bally < p1Bottom &&
+                ball.y < p1Bottom &&
                 ballBottom > p1y
 
                 ||
 
                 ballright > p2x&&
-                ballx < p2right &&
-                bally < p2Bottom &&
+                ball.x < p2right &&
+                ball.y < p2Bottom &&
                 ballBottom > p2y)
 
             {
                 collision = true;
-                ballVx = -ballVx;
+                ball.vx = -ball.vx;
             }
 
+//  ALSO PROBLEM IN HERE, NEED TO DISTIGUISH BETWEEN WHICH PLAYER HAS SCORED!!
 
             else
             {
                 collision = false;
             }
 
-            if (ballx + ballWidth >= goalScoredP1 || ballx < goalScoredP1)
+            if (ball.x + ball.width >= goalScoredP1)
             {
 
                 goalScored = true;
@@ -194,46 +194,52 @@ void Game::UpdateModel()
      
         
 
-        if (goalScored == true)
+        //THE PROBLEM IS IN HERE SOMEHOW, NEEDS TO SHOW THE OUTCOME IF EITHER PLAYER SCORES, NOT JUST PLAYER 1
+
+        else if (goalScored == true)
         {
 
             if (scoreP1.scoreP1Track > ScoreMax)
             {
                 scoreP1.scoreP1BarEnd = ScoreMax;
                 //goalScored = false;
-                ballx = Graphics::ScreenWidth / 2;
-                bally = Graphics::ScreenHeight / 2;
-                ballVx = 0;
-                ballVy = 0;
+                ball.x = Graphics::ScreenWidth / 2;
+                ball.y = Graphics::ScreenHeight / 2;
+                ball.vx = 0;
+                ball.vy = 0;
                 gameOver = true;
             }
             else if (scoreP2.scoreP2Track > ScoreMax)
             {
                 scoreP2.scoreP2BarEnd = ScoreMax;
                 //goalScored = false;
-                ballx = Graphics::ScreenWidth / 2;
-                bally = Graphics::ScreenHeight / 2;
-                ballVx = 0;
-                ballVy = 0;
+                ball.x = Graphics::ScreenWidth / 2;
+                ball.y = Graphics::ScreenHeight / 2;
+                ball.vx = 0;
+                ball.vy = 0;
                 gameOver = true;
             }
 
-            else
+            else if (goalScored == true)
             {
+                
                 scoreP1.scoreP1Track = scoreP1.scoreP1Track + reward;
                 scoreP1.scoreP1BarEnd = scoreP1.scoreP1BarEnd + scoreP1.scoreP1Track;
+
+               
+
                 goalScored = false;
-                gameOver = false;
+                
             }
         }
     }
     else if (gameOver == true)
     {
 
-    ballVx = 0;
-    ballVy = 0;
-    ballx = gfx.ScreenWidth / 2;
-    bally = gfx.ScreenHeight / 2;
+    ball.vx = 0;
+    ball.vy = 0;
+    ball.x = gfx.ScreenWidth / 2;
+    ball.y = gfx.ScreenHeight / 2;
 
     //Clamps for GameOver
 
@@ -270,10 +276,6 @@ void Game::UpdateModel()
  }
 
      
-   
-   
-
-
 void Game::ComposeFrame()
 {
     if (gameOver == true)
@@ -293,12 +295,6 @@ void Game::ComposeFrame()
         {
             gfx.PutPixel(gfx.ScreenWidth / 2, i, Colors::Blue);
         }
-
-
-
-
-
-
         //paddles
         gfx.DrawRectDim(p1x, p1y, p1Width, p1Height, Colors::White);
         gfx.DrawRectDim(p2x, p2y, p2Width, p2Height, Colors::White);
@@ -306,9 +302,9 @@ void Game::ComposeFrame()
 
 
 
-        gfx.DrawRectDim(ballx, bally, ballWidth, ballHeight, Colors::Red);
+        ball.Draw(gfx);
 
-        //GameOver
+        
     }
    
   
