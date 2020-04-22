@@ -26,7 +26,10 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd )
 {
-   
+    player1.InitPlayer(10, gfx.ScreenHeight/2, player1.width, player1.height, Colors::Yellow);
+    player2.InitPlayer(gfx.ScreenWidth - 20, gfx.ScreenHeight/2, player2.width, player2.height,Colors::White);
+    player1.InitMeter(20, 20, player1.meterWidth, player1.meterHeight, Colors::Blue);
+    player2.InitMeter(gfx.ScreenWidth - 100, 20, player2.meterWidth, player2.meterHeight, Colors::Red);
 }
 
 
@@ -42,197 +45,118 @@ void Game::UpdateModel()
 {  
     if (gameOver == false)
     {
+        //Goal Scored Logic
+
+        int ballRight = ball.x + ball.width;
+
+        if (ball.x <= goalLineP1)
+        {
+            goalScoredP2 = true;
+        }
+        else if (ballRight >= goalLineP2)
+        {
+            goalScoredP1 = true;
+        }
 
 
-        if (goalScored == false)
+        //If No Goal Has Been Scored:
+
+        if (goalScoredP1 == false || goalScoredP2 == false)
         {
 
             //ball gets velocity
 
-
             ball.x += ball.vx;
             ball.y += ball.vy;
 
-          
+
 
 
             //logic to move the paddles
 
                     //Player One Logic
 
-                    if (wnd.kbd.KeyIsPressed('S'))
-                    {
-                        p1y += 5;
-                    }
+            if (wnd.kbd.KeyIsPressed('S'))
+            {
+                player1.y += 5;
+            }
 
-                    if (wnd.kbd.KeyIsPressed('W'))
-                    {
-                        p1y -= 5;
-                    }
-
-           
-
-                      //Player Two Logic
-
-                     if (wnd.kbd.KeyIsPressed(VK_UP))
-                     {
-                         p2y -= 5;
-                     }
-
-                     if (wnd.kbd.KeyIsPressed(VK_DOWN))
-                     {
-                         p2y += 5;
-                     }
-
-            
-
-
-                        
+            if (wnd.kbd.KeyIsPressed('W'))
+            {
+                player1.y -= 5;
+            }
 
 
 
+            //Player Two Logic
 
+            if (wnd.kbd.KeyIsPressed(VK_UP))
+            {
+                player2.y -= 5;
+            }
 
-                 //Clamps For Paddle One
-                 if (p1y < 0)
-                 {
-                     p1y = 1;
-                 }
+            if (wnd.kbd.KeyIsPressed(VK_DOWN))
+            {
+                player2.y += 5;
+            }
 
-                 if (p1y + p1Height > gfx.ScreenHeight)
-                 {
-                     p1y = (gfx.ScreenHeight - p1Height) - 1;
-                 }
+            //Players clamp to screen
 
-          
-
-                  //Clamps For Paddle 2
-                 if (p2y < 0)
-                 {
-                     p2y = 1;
-                 }
-
-                 if (p2y + p2Height > gfx.ScreenHeight)
-                 {
-                     p2y = (gfx.ScreenHeight - p2Height) - 1;
-
-                 }
-
-
-            
+            player1.ClampScreenX();
+            player2.ClampScreenX();
 
 
 
             //Collision and rebound for ball
 
-                             const int ballright = ball.x + ball.width;
-                             if (ball.x < 0)
-                             {
-                                 ball.x = 0;
-                                 ball.vx = -ball.vx;
-                             }
-                             else if (ballright >= gfx.ScreenWidth)
-                             {
-                                 ball.x = (gfx.ScreenWidth - 1) - ball.width;
-                                 ball.vx = -ball.vx;
-                             }
-
-                             const int ballbottom = ball.y + ball.height;
-                             if (ball.y < 0)
-                             {
-                                 ball.y = 0;
-                                 ball.vy = -ball.vy;
-                             }
-                             else if (ballbottom >= gfx.ScreenHeight)
-                             {
-                                 ball.y = (gfx.ScreenHeight - 1) - ball.height;
-                                 ball.vy = -ball.vy;
-                             }
+            ball.ClampToScreen();
 
 
-            //collision of ball with paddles
-
-            const int ballBottom = ball.y + ball.height;
-            const int p1right = p1x + p1Width;
-            const int p1Bottom = p1y + p1Height;
-            const int p2right = p2x + p2Width;
-            const int p2Bottom = p2y + p2Height;
-
-            if (ball.x < p1right &&
-                ballright > p1x&&
-                ball.y < p1Bottom &&
-                ballBottom > p1y
-
-                ||
-
-                ballright > p2x&&
-                ball.x < p2right &&
-                ball.y < p2Bottom &&
-                ballBottom > p2y)
-
+            if
+                (ball.CollisionDetect(player1.x, player1.y, player1.width, player1.height))
             {
-                collision = true;
                 ball.vx = -ball.vx;
             }
 
-//  ALSO PROBLEM IN HERE, NEED TO DISTIGUISH BETWEEN WHICH PLAYER HAS SCORED!!
-
-            else
+            if (ball.CollisionDetect(player2.x, player2.y, player2.width, player2.height))
             {
-                collision = false;
+                ball.vx = -ball.vx;
             }
-
-            if (ball.x + ball.width >= goalScoredP1)
-            {
-
-                goalScored = true;
-            }
-            else { goalScored == false; }
 
         }
 
-     
-        
 
-        //THE PROBLEM IS IN HERE SOMEHOW, NEEDS TO SHOW THE OUTCOME IF EITHER PLAYER SCORES, NOT JUST PLAYER 1
-
-        else if (goalScored == true)
+        // If Player One Scores A Goal:
+        if (goalScoredP1 == true && player1.meterWidth > player1.scoreMax)
         {
-
-            if (scoreP1.scoreP1Track > ScoreMax)
-            {
-                scoreP1.scoreP1BarEnd = ScoreMax;
-                //goalScored = false;
-                ball.x = Graphics::ScreenWidth / 2;
-                ball.y = Graphics::ScreenHeight / 2;
-                ball.vx = 0;
-                ball.vy = 0;
-                gameOver = true;
-            }
-            else if (scoreP2.scoreP2Track > ScoreMax)
-            {
-                scoreP2.scoreP2BarEnd = ScoreMax;
-                //goalScored = false;
-                ball.x = Graphics::ScreenWidth / 2;
-                ball.y = Graphics::ScreenHeight / 2;
-                ball.vx = 0;
-                ball.vy = 0;
-                gameOver = true;
-            }
-
-            else if (goalScored == true)
-            {
-                
-                scoreP1.scoreP1Track = scoreP1.scoreP1Track + reward;
-                scoreP1.scoreP1BarEnd = scoreP1.scoreP1BarEnd + scoreP1.scoreP1Track;
-
-               
-
-                goalScored = false;
-                
-            }
+            player1.meterWidth = player1.scoreMax;
+            goalScoredP1 = false;
+            gameOver = true;
         }
+        else if (goalScoredP1 == true)
+        
+        {
+            player1.meterWidth = player1.meterWidth + reward;
+            goalScoredP1 = false;
+        }
+
+       
+        if (goalScoredP2 == true && player2.meterWidth > player2.scoreMax)
+
+        {
+            player2.meterWidth = player2.scoreMax;
+            goalScoredP2 = false;
+            gameOver = true;
+        }
+        else if (goalScoredP2 == true)
+        {
+            player2.meterWidth = player2.meterWidth + reward;
+            goalScoredP2 = false;
+        }
+
+
     }
+    
     else if (gameOver == true)
     {
 
@@ -241,6 +165,7 @@ void Game::UpdateModel()
     ball.x = gfx.ScreenWidth / 2;
     ball.y = gfx.ScreenHeight / 2;
 
+   
     //Clamps for GameOver
 
     if (GameOver.x <= 1)
@@ -272,37 +197,40 @@ void Game::UpdateModel()
     
 
      }
+     
 
  }
 
      
 void Game::ComposeFrame()
 {
+
+  
+
     if (gameOver == true)
     {
 
         GameOver.GameOver(gfx);
+
+     
+
     }
 
     else if (gameOver == false)
     {
 
-        // Score Meter - Player One
-        scoreP1.DrawP1(gfx);
-        scoreP2.DrawP2(gfx);
+        
 
         for (int i = 0; i < gfx.ScreenHeight; i++)
         {
             gfx.PutPixel(gfx.ScreenWidth / 2, i, Colors::Blue);
         }
-        //paddles
-        gfx.DrawRectDim(p1x, p1y, p1Width, p1Height, Colors::White);
-        gfx.DrawRectDim(p2x, p2y, p2Width, p2Height, Colors::White);
-
-
-
-
+       
         ball.Draw(gfx);
+        player1.Draw(gfx);
+        player2.Draw(gfx);
+        player1.DrawBar(gfx);
+        player2.DrawBar(gfx);
 
         
     }

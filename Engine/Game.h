@@ -23,9 +23,9 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-#include "Score.h"
 #include "Sprites.h"
 #include "Ball.h"
+#include "Player.h"
 
 class Game
 {
@@ -46,38 +46,22 @@ private:
 	/********************************/
 	/*  User Variables              */
 
-    //Paddles
-    int p1x = 20;
-    int p1y = gfx.ScreenHeight / 4;
-    const int p1Width = 5;
-    const int p1Height = 100;
-
-    int p2x = gfx.ScreenWidth-30;
-    int p2y =  gfx.ScreenWidth / 4;
-    const int p2Width = 5;
-    const int p2Height = 100;
-
-        
-    //Ball
-    //int ballx = gfx.ScreenWidth/2;
-    //int bally = gfx.ScreenHeight/2;
-    //const int ballHeight = 5;
-    //const int ballWidth = 5;
-    //int ballVx = 5;
-    //int ballVy = 5;  
+    
     Ball ball;
+    Player player1;
+    Player player2;
 
-    Score scoreP1;
-    Score scoreP2;
+   
 
-    bool goalScored = false;
+    bool goalScoredP1 = false;
+    bool goalScoredP2 = false;
     bool collision = false;
     bool gameOver = false;
-    bool ScoreMax = 50;
+    int ScoreMax = 50;
     const int  reward = 5;
 
-    int goalScoredP1= gfx.ScreenWidth - 2;
-    int goalScoredP2 = 1;
+    int goalLineP1 = 2;
+    int goalLineP2 = gfx.ScreenWidth - 5;
 
     Sprites GameOver;
 
