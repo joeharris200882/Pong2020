@@ -17,4 +17,9 @@ public:
     int vy = 5;
     
     
+   
+    
+    Color c = Colors::Green;
+        
+    
 };

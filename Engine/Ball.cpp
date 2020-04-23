@@ -5,6 +5,7 @@ void Ball::Draw(Graphics& gfx)
 	gfx.DrawRectDim(x, y, width, height, Colors::Red);
 }
 
+
 void Ball::ClampToScreen()
 {
     const int ballright = x + width;
@@ -31,6 +32,10 @@ void Ball::ClampToScreen()
         vy = -vy;
     }
 }
+
+
+
+
 
 bool Ball::CollisionDetect(int obj_x, int obj_y, int obj_width, int obj_height)
 {

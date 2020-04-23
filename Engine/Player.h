@@ -32,7 +32,10 @@ public:
     int meterWidth = 10;
     int meterHeight = metery + 15;
     Color meterc;
-    const int scoreMax = 40;
+    const int scoreMax = 100;
+    int meterOutlineThk = 2;
+    int meterOutlinePad = 3;
+
     
 
 

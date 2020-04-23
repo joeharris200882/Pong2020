@@ -68,6 +68,7 @@ void Game::UpdateModel()
 
             ball.x += ball.vx;
             ball.y += ball.vy;
+            
 
 
 
@@ -110,6 +111,7 @@ void Game::UpdateModel()
             //Collision and rebound for ball
 
             ball.ClampToScreen();
+           
 
 
             if
@@ -218,10 +220,12 @@ void Game::ComposeFrame()
 
     else if (gameOver == false)
     {
-
+       
+       
         
 
-        for (int i = 0; i < gfx.ScreenHeight; i++)
+
+        for (int i = 5; i < gfx.ScreenHeight -5; i++)
         {
             gfx.PutPixel(gfx.ScreenWidth / 2, i, Colors::Blue);
         }
@@ -229,8 +233,11 @@ void Game::ComposeFrame()
         ball.Draw(gfx);
         player1.Draw(gfx);
         player2.Draw(gfx);
+
+
         player1.DrawBar(gfx);
         player2.DrawBar(gfx);
+       
 
         
     }

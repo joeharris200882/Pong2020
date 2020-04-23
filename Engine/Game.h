@@ -58,8 +58,19 @@ private:
     bool collision = false;
     bool gameOver = false;
     const int  reward = 5;
-    int goalLineP1 = 2;
+   
+    
+    //border variables
+
+    int goalLineP1 = 5;
     int goalLineP2 = gfx.ScreenWidth - 5;
+    int sideLine1 = 5;
+    int sideLine2 = Graphics::ScreenHeight - 5;
+    int borderWidth = 3;
+    int x_indent;
+    int y_indent;
+
+    
 
     Sprites GameOver;
 

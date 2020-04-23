@@ -9,7 +9,12 @@ void Player::Draw(Graphics& gfx)
 
 void Player::DrawBar(Graphics& gfx)
 {
-
+    //check if the boundary grows when the scoremax is adjusted, otherwise you need to get rid of some magic numbers also width needs to grow
+    gfx.DrawRectDim(meterx - meterOutlinePad, metery - meterOutlinePad, scoreMax + meterOutlinePad, meterOutlineThk, Colors::White);
+    gfx.DrawRectDim(meterx - meterOutlinePad, metery -meterOutlinePad, meterOutlinePad, meterHeight+8, Colors::White);
+    gfx.DrawRectDim(meterx -meterOutlinePad, (metery +meterHeight) +meterOutlinePad, scoreMax + meterOutlinePad, meterOutlineThk, Colors::White);
+    gfx.DrawRectDim((meterx + scoreMax), metery -meterOutlinePad, meterOutlinePad, meterHeight+ 8, Colors::White);
+   
     gfx.DrawRectDim(meterx, metery, meterWidth, meterHeight, meterc);
 }
 
