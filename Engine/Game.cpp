@@ -21,15 +21,15 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game( MainWindow& wnd )
-	:
-	wnd( wnd ),
-	gfx( wnd )
+Game::Game(MainWindow& wnd)
+    :
+    wnd(wnd),
+    gfx(wnd),
+    player1(20, 300, Colors::Cyan, 20, 20, Colors::Yellow),
+    player2(Graphics::ScreenWidth - 40, 300, Colors::Red, Graphics::ScreenWidth - 150, 20, Colors::Blue)
+
+
 {
-    player1.InitPlayer(10, gfx.ScreenHeight/2, player1.width, player1.height, Colors::Yellow);
-    player2.InitPlayer(gfx.ScreenWidth - 20, gfx.ScreenHeight/2, player2.width, player2.height,Colors::White);
-    player1.InitMeter(20, 20, player1.meterWidth, player1.meterHeight, Colors::Blue);
-    player2.InitMeter(gfx.ScreenWidth - 100, 20, player2.meterWidth, player2.meterHeight, Colors::Red);
 }
 
 
@@ -78,12 +78,12 @@ void Game::UpdateModel()
 
             if (wnd.kbd.KeyIsPressed('S'))
             {
-                player1.y += 5;
+                player1.y += 7;
             }
 
             if (wnd.kbd.KeyIsPressed('W'))
             {
-                player1.y -= 5;
+                player1.y -= 7;
             }
 
 
@@ -92,12 +92,12 @@ void Game::UpdateModel()
 
             if (wnd.kbd.KeyIsPressed(VK_UP))
             {
-                player2.y -= 5;
+                player2.y -= 7;
             }
 
             if (wnd.kbd.KeyIsPressed(VK_DOWN))
             {
-                player2.y += 5;
+                player2.y += 7;
             }
 
             //Players clamp to screen

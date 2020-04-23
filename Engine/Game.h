@@ -57,9 +57,7 @@ private:
     bool goalScoredP2 = false;
     bool collision = false;
     bool gameOver = false;
-    int ScoreMax = 50;
     const int  reward = 5;
-
     int goalLineP1 = 2;
     int goalLineP2 = gfx.ScreenWidth - 5;
 
