@@ -24,12 +24,11 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+    player1(20, 300, Colors::Cyan, 20, 20, Colors::Yellow),
+    player2(Graphics::ScreenWidth - 40, 300, Colors::Red, Graphics::ScreenWidth - 150, 20, Colors::Blue)
 {
-    player1.InitPlayer(10, gfx.ScreenHeight/2, player1.width, player1.height, Colors::Yellow);
-    player2.InitPlayer(gfx.ScreenWidth - 20, gfx.ScreenHeight/2, player2.width, player2.height,Colors::White);
-    player1.InitMeter(20, 20, player1.meterWidth, player1.meterHeight, Colors::Blue);
-    player2.InitMeter(gfx.ScreenWidth - 100, 20, player2.meterWidth, player2.meterHeight, Colors::Red);
+
 }
 
 
@@ -220,6 +219,10 @@ void Game::ComposeFrame()
     {
 
         
+        gfx.DrawRectDim(goalLineP1, sideLine1, goalLineP2 - borderWidth, borderWidth, Colors::Blue);
+        gfx.DrawRectDim(goalLineP1, sideLine2, goalLineP2 - borderWidth, borderWidth, Colors::Blue);
+        gfx.DrawRectDim(goalLineP1, sideLine1, borderWidth, sideLine2 - borderWidth, Colors::Blue );
+        gfx.DrawRectDim(goalLineP2, sideLine1, borderWidth, sideLine2 - borderWidth, Colors::Blue);
 
         for (int i = 0; i < gfx.ScreenHeight; i++)
         {

@@ -60,8 +60,17 @@ private:
     int ScoreMax = 50;
     const int  reward = 5;
 
-    int goalLineP1 = 2;
+
+    //border variables
+
+    int goalLineP1 = 5;
     int goalLineP2 = gfx.ScreenWidth - 5;
+    int sideLine1 = 5;
+    int sideLine2 = Graphics::ScreenHeight - 5;
+    int borderWidth = 3;
+ 
+
+ 
 
     Sprites GameOver;
 
