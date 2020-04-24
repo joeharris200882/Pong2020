@@ -8,26 +8,26 @@ void Ball::Draw(Graphics& gfx)
 void Ball::ClampToScreen()
 {
     const int ballright = x + width;
-    if (x < 0)
+    if (x < goalLineP1+borderWidth)
     {
-        x = 0;
+        x = goalLineP1+borderWidth;
         vx = -vx;
     }
-    else if (ballright >= Graphics::ScreenWidth)
+    else if (ballright >= goalLineP2-borderWidth)
     {
-        x = (Graphics::ScreenWidth - 1) - width;
+        x = (goalLineP2-borderWidth) - width;
         vx = - vx;
     }
 
     const int ballbottom = y + height;
-    if (y < 0)
+    if (y < sideLine1+borderWidth)
     {
-        y = 0;
+        y = sideLine1+borderWidth;
         vy = -vy;
     }
-    else if (ballbottom >= Graphics::ScreenHeight)
+    else if (ballbottom >= sideLine2-borderWidth)
     {
-        y = (Graphics::ScreenHeight - 1) - height;
+        y = (sideLine2-borderWidth) - height;
         vy = -vy;
     }
 }

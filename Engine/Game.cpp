@@ -26,7 +26,7 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
     player1(20, 300, Colors::Cyan, 20, 20, Colors::Yellow),
-    player2(Graphics::ScreenWidth - 40, 300, Colors::Red, Graphics::ScreenWidth - 150, 20, Colors::Blue)
+    player2(Graphics::ScreenWidth - 20, 300, Colors::Red, Graphics::ScreenWidth - 150, 20, Colors::Blue)
 {
 
 }

@@ -16,5 +16,10 @@ public:
     int vx = 5;
     int vy = 5;
     
+    int goalLineP1 = 5;
+    int goalLineP2 = Graphics::ScreenWidth - 5;
+    int sideLine1 = 5;
+    int sideLine2 = Graphics::ScreenHeight - 5;
+    int borderWidth = 3;
     
 };
