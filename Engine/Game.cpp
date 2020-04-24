@@ -48,11 +48,11 @@ void Game::UpdateModel()
 
         int ballRight = ball.x + ball.width;
 
-        if (ball.x <= goalLineP1)
+        if (ball.x <= goalLineP1+borderWidth)
         {
             goalScoredP2 = true;
         }
-        else if (ballRight >= goalLineP2)
+        else if (ballRight >= goalLineP2-borderWidth)
         {
             goalScoredP1 = true;
         }
@@ -218,13 +218,14 @@ void Game::ComposeFrame()
     else if (gameOver == false)
     {
 
-        
+        // Arena Outline
         gfx.DrawRectDim(goalLineP1, sideLine1, goalLineP2 - borderWidth, borderWidth, Colors::Blue);
         gfx.DrawRectDim(goalLineP1, sideLine2, goalLineP2 - borderWidth, borderWidth, Colors::Blue);
         gfx.DrawRectDim(goalLineP1, sideLine1, borderWidth, sideLine2 - borderWidth, Colors::Blue );
         gfx.DrawRectDim(goalLineP2, sideLine1, borderWidth, sideLine2 - borderWidth, Colors::Blue);
 
-        for (int i = 0; i < gfx.ScreenHeight; i++)
+        //Arena HalfwayLine
+        for (int i = sideLine1+borderWidth; i < sideLine2; i++)
         {
             gfx.PutPixel(gfx.ScreenWidth / 2, i, Colors::Blue);
         }
