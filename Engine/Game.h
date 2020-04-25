@@ -27,6 +27,8 @@
 #include "Ball.h"
 #include "Player.h"
 
+#include "Vec2.h"
+
 class Game
 {
 public:
@@ -50,6 +52,7 @@ private:
     Ball ball;
     Player player1;
     Player player2;
+   
 
    
 

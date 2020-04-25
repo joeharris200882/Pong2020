@@ -46,9 +46,9 @@ void Game::UpdateModel()
     {
         //Goal Scored Logic
 
-        int ballRight = ball.x + ball.width;
+        int ballRight = ball.pos.x + ball.width;
 
-        if (ball.x <= goalLineP1+borderWidth)
+        if (ball.pos.x <= goalLineP1+borderWidth)
         {
             goalScoredP2 = true;
         }
@@ -65,8 +65,8 @@ void Game::UpdateModel()
 
             //ball gets velocity
 
-            ball.x += ball.vx;
-            ball.y += ball.vy;
+            ball.pos.x += ball.vx;
+            ball.pos.y += ball.vy;
 
 
 
@@ -77,12 +77,12 @@ void Game::UpdateModel()
 
             if (wnd.kbd.KeyIsPressed('S'))
             {
-                player1.y += 5;
+                player1.pos.y += 5;
             }
 
             if (wnd.kbd.KeyIsPressed('W'))
             {
-                player1.y -= 5;
+                player1.pos.y -= 5;
             }
 
 
@@ -91,12 +91,12 @@ void Game::UpdateModel()
 
             if (wnd.kbd.KeyIsPressed(VK_UP))
             {
-                player2.y -= 5;
+                player2.pos.y -= 5;
             }
 
             if (wnd.kbd.KeyIsPressed(VK_DOWN))
             {
-                player2.y += 5;
+                player2.pos.y += 5;
             }
 
             //Players clamp to screen
@@ -112,12 +112,12 @@ void Game::UpdateModel()
 
 
             if
-                (ball.CollisionDetect(player1.x, player1.y, player1.width, player1.height))
+                (ball.CollisionDetect(player1.pos.x, player1.pos.y, player1.width, player1.height))
             {
                 ball.vx = -ball.vx;
             }
 
-            if (ball.CollisionDetect(player2.x, player2.y, player2.width, player2.height))
+            if (ball.CollisionDetect(player2.pos.x, player2.pos.y, player2.width, player2.height))
             {
                 ball.vx = -ball.vx;
             }
@@ -161,8 +161,8 @@ void Game::UpdateModel()
 
     ball.vx = 0;
     ball.vy = 0;
-    ball.x = gfx.ScreenWidth / 2;
-    ball.y = gfx.ScreenHeight / 2;
+    ball.pos.x = gfx.ScreenWidth / 2;
+    ball.pos.y = gfx.ScreenHeight / 2;
 
    
     //Clamps for GameOver

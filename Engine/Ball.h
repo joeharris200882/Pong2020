@@ -1,5 +1,6 @@
 #pragma once
 #include "Graphics.h"
+#include "Vec2.h"
 
 class Ball
 {
@@ -9,12 +10,13 @@ public:
     void ClampToScreen();
     bool CollisionDetect(int paddle_x, int paddle_y, int paddle_width, int paddle_height);
 
-    int x = Graphics::ScreenWidth / 2;
-    int y = Graphics::ScreenHeight / 2;
+  
     const int height = 5;
     const int width = 5;
     int vx = 5;
     int vy = 5;
+    Vec2 pos;
+
     
     int goalLineP1 = 5;
     int goalLineP2 = Graphics::ScreenWidth - 5;
