@@ -4,7 +4,7 @@
 
 void Player::Draw(Graphics& gfx)
 {
-	gfx.DrawRectDim(x, y, width, height, c);
+	gfx.DrawRectDim(pos.x, pos.y, width, height, c);
 }
 
 void Player::DrawBar(Graphics& gfx)
@@ -20,13 +20,13 @@ void Player::DrawBar(Graphics& gfx)
 
 void Player::ClampScreenX()
 {
-    if (y < 0)
+    if (pos.y < 0)
     {
-        y = 1;
+        pos.y = 1;
     }
 
-    if (y + height > Graphics::ScreenHeight)
+    if (pos.y + height > Graphics::ScreenHeight)
     {
-        y = (Graphics::ScreenHeight - height) - 1;
+        pos.y = (Graphics::ScreenHeight - height) - 1;
     }
 }
