@@ -26,10 +26,11 @@ public:
     //int y;
     int width = 5;
     int height = 100;
+
     
     Color c;
 
-    //FIGURE THIS OUT !!!
+    
     int meterx;
     int metery;
     int meterWidth = 10;
