@@ -26,6 +26,7 @@
 #include "Sprites.h"
 #include "Ball.h"
 #include "Player.h"
+#include "FrameTimer.h"
 
 class Game
 {
@@ -50,6 +51,7 @@ private:
     Ball ball;
     Player player1;
     Player player2;
+    FrameTimer ft;
 
    
 
